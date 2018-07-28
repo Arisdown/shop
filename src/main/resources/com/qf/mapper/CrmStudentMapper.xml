@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.mapper.CrmStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.CrmStudent" >
+    <id column="studentId" property="studentid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="identify" property="identify" jdbcType="VARCHAR" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="mustTuition" property="musttuition" jdbcType="REAL" />
+    <result column="actualTuition" property="actualtuition" jdbcType="REAL" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="professional" property="professional" jdbcType="VARCHAR" />
+    <result column="identityAddress" property="identityaddress" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="homeTelephone" property="hometelephone" jdbcType="VARCHAR" />
+    <result column="homeContact" property="homecontact" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="classId" property="classid" jdbcType="VARCHAR" />
+    <result column="referId" property="referid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    studentId, name, telephone, identify, QQ, gender, mustTuition, actualTuition, email, 
+    school, education, professional, identityAddress, address, remark, homeTelephone, 
+    homeContact, status, classId, referId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.domain.CrmStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from crm_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <resultMap type="crmStudent" id="classInfoMap">
+      <association property="classInfo" javaType="CrmClass" column="classid" select="com.qf.mapper.CrmClassMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <select id="selectByPrimaryKey" resultMap="classInfoMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crm_student
+    where studentId = #{studentid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crm_student
+    where studentId = #{studentid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qf.domain.CrmStudentExample" >
+    delete from crm_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.CrmStudent" >
+    insert into crm_student (studentId, name, telephone, 
+      identify, QQ, gender, 
+      mustTuition, actualTuition, email, 
+      school, education, professional, 
+      identityAddress, address, remark, 
+      homeTelephone, homeContact, status, 
+      classId, referId)
+    values (#{studentid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{identify,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{musttuition,jdbcType=REAL}, #{actualtuition,jdbcType=REAL}, #{email,jdbcType=VARCHAR}, 
+      #{school,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR}, 
+      #{identityaddress,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{hometelephone,jdbcType=VARCHAR}, #{homecontact,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{classid,jdbcType=VARCHAR}, #{referid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.CrmStudent" >
+    insert into crm_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="identify != null" >
+        identify,
+      </if>
+      <if test="qq != null" >
+        QQ,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="musttuition != null" >
+        mustTuition,
+      </if>
+      <if test="actualtuition != null" >
+        actualTuition,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="professional != null" >
+        professional,
+      </if>
+      <if test="identityaddress != null" >
+        identityAddress,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="hometelephone != null" >
+        homeTelephone,
+      </if>
+      <if test="homecontact != null" >
+        homeContact,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="classid != null" >
+        classId,
+      </if>
+      <if test="referid != null" >
+        referId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="identify != null" >
+        #{identify,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="musttuition != null" >
+        #{musttuition,jdbcType=REAL},
+      </if>
+      <if test="actualtuition != null" >
+        #{actualtuition,jdbcType=REAL},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="identityaddress != null" >
+        #{identityaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="hometelephone != null" >
+        #{hometelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="homecontact != null" >
+        #{homecontact,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="referid != null" >
+        #{referid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.domain.CrmStudentExample" resultType="java.lang.Integer" >
+    select count(*) from crm_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update crm_student
+    <set >
+      <if test="record.studentid != null" >
+        studentId = #{record.studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identify != null" >
+        identify = #{record.identify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        QQ = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.musttuition != null" >
+        mustTuition = #{record.musttuition,jdbcType=REAL},
+      </if>
+      <if test="record.actualtuition != null" >
+        actualTuition = #{record.actualtuition,jdbcType=REAL},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null" >
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null" >
+        education = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professional != null" >
+        professional = #{record.professional,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityaddress != null" >
+        identityAddress = #{record.identityaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hometelephone != null" >
+        homeTelephone = #{record.hometelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homecontact != null" >
+        homeContact = #{record.homecontact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classid != null" >
+        classId = #{record.classid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referid != null" >
+        referId = #{record.referid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update crm_student
+    set studentId = #{record.studentid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      identify = #{record.identify,jdbcType=VARCHAR},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=VARCHAR},
+      mustTuition = #{record.musttuition,jdbcType=REAL},
+      actualTuition = #{record.actualtuition,jdbcType=REAL},
+      email = #{record.email,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      education = #{record.education,jdbcType=VARCHAR},
+      professional = #{record.professional,jdbcType=VARCHAR},
+      identityAddress = #{record.identityaddress,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      homeTelephone = #{record.hometelephone,jdbcType=VARCHAR},
+      homeContact = #{record.homecontact,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      classId = #{record.classid,jdbcType=VARCHAR},
+      referId = #{record.referid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.CrmStudent" >
+    update crm_student
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="identify != null" >
+        identify = #{identify,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="musttuition != null" >
+        mustTuition = #{musttuition,jdbcType=REAL},
+      </if>
+      <if test="actualtuition != null" >
+        actualTuition = #{actualtuition,jdbcType=REAL},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        professional = #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="identityaddress != null" >
+        identityAddress = #{identityaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="hometelephone != null" >
+        homeTelephone = #{hometelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="homecontact != null" >
+        homeContact = #{homecontact,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        classId = #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="referid != null" >
+        referId = #{referid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where studentId = #{studentid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.CrmStudent" >
+    update crm_student
+    set name = #{name,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      identify = #{identify,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      mustTuition = #{musttuition,jdbcType=REAL},
+      actualTuition = #{actualtuition,jdbcType=REAL},
+      email = #{email,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      professional = #{professional,jdbcType=VARCHAR},
+      identityAddress = #{identityaddress,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      homeTelephone = #{hometelephone,jdbcType=VARCHAR},
+      homeContact = #{homecontact,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      classId = #{classid,jdbcType=VARCHAR},
+      referId = #{referid,jdbcType=VARCHAR}
+    where studentId = #{studentid,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findStuByPage" resultMap="BaseResultMap">
+      select 
+    <include refid="Base_Column_List" />
+     from crm_student limit #{currentPage},#{pageSize}
+  </select>
+  
+  <select id="findStuByClassId" resultType="crmStudent">
+   select 
+    <include refid="Base_Column_List" />
+     from crm_student where classId=#{classid}
+  
+  </select>
+  
+</mapper>

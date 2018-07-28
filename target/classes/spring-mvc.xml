@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+        <context:annotation-config/>
+        <context:component-scan base-package="com.qf.service"/>
+        <context:component-scan base-package="com.qf.controller"/>
+        
+        <mvc:annotation-driven/>
+        
+        <mvc:default-servlet-handler/>
+        
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/crm_html/html/" p:suffix=".jsp"/>
+        
+        <!-- 内部消息资源加载器 -->
+        <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+              <property name="basename" value="/WEB-INF/messages/msg"/>
+        </bean>
+        
+        <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+              <property name="maxUploadSizePerFile" value="10485760"/>
+              <property name="defaultEncoding" value="utf-8"/>
+              <property name="uploadTempDir" value="/upload/"/>
+              
+        </bean>
+        
+        <import resource="application.xml"/>
+</beans>

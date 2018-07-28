@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.mapper.CrmFollowMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.CrmFollow" >
+    <result column="followId" property="followid" jdbcType="VARCHAR" />
+    <result column="followTime" property="followtime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="staffId" property="staffid" jdbcType="VARCHAR" />
+    <result column="referId" property="referid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    followId, followTime, content, staffId, referId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.domain.CrmFollowExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from crm_follow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.qf.domain.CrmFollowExample" >
+    delete from crm_follow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.CrmFollow" >
+    insert into crm_follow (followId, followTime, content, 
+      staffId, referId)
+    values (#{followid,jdbcType=VARCHAR}, #{followtime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
+      #{staffid,jdbcType=VARCHAR}, #{referid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.CrmFollow" >
+    insert into crm_follow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="followid != null" >
+        followId,
+      </if>
+      <if test="followtime != null" >
+        followTime,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="staffid != null" >
+        staffId,
+      </if>
+      <if test="referid != null" >
+        referId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="followid != null" >
+        #{followid,jdbcType=VARCHAR},
+      </if>
+      <if test="followtime != null" >
+        #{followtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="staffid != null" >
+        #{staffid,jdbcType=VARCHAR},
+      </if>
+      <if test="referid != null" >
+        #{referid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.domain.CrmFollowExample" resultType="java.lang.Integer" >
+    select count(*) from crm_follow
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update crm_follow
+    <set >
+      <if test="record.followid != null" >
+        followId = #{record.followid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.followtime != null" >
+        followTime = #{record.followtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffid != null" >
+        staffId = #{record.staffid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referid != null" >
+        referId = #{record.referid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update crm_follow
+    set followId = #{record.followid,jdbcType=VARCHAR},
+      followTime = #{record.followtime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=VARCHAR},
+      staffId = #{record.staffid,jdbcType=VARCHAR},
+      referId = #{record.referid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
